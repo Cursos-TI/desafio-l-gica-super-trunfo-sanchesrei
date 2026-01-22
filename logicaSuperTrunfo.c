@@ -70,152 +70,142 @@
 #include <time.h>
 
 int main() {
-  srand(time(NULL));
-// Dados das cidades pré-definidos para facilitar os testes
-  char nomes [4][50] = {"SaoPaulo", "RiodeJaneiro", "BeloHorizonte", "Curitiba"};
-  unsigned long int populacoes [4] = {12300000, 6748000, 2520000, 1960000};
-  float areas [4] = {1521.11, 1182.3, 331.4, 435.0};
-  float pibs [4] = {763.0, 301.0, 110.0, 90.0};
-  int pontosTuristicos [4] = {15, 20, 10, 8};
+    srand(time(NULL));
 
-  float somaDensidades = 0;
+    // 1. Definição dos Dados das Cidades
+    char nomes[4][50] = {"Sao Paulo", "Rio de Janeiro", "Belo Horizonte", "Curitiba"};
+    unsigned long int populacoes[4] = {12300000, 6748000, 2520000, 1960000};
+    float areas[4] = {1521.11, 1182.3, 331.4, 435.0};
+    float pibs[4] = {763.0, 301.0, 110.0, 90.0};
+    int pontosTuristicos[4] = {15, 20, 10, 8};
 
-  int escolhaJogador1, escolhaPc;
-  printf("\n=======================================================================\n");
-  printf("         Ola Bem vindo ao jogo Super Trunfo - Cidades!");
-  printf("                   \n--- ESCOLHA SUA CARTA ---                            \n");
-  printf("0. Sao Paulo\n1. Rio de Janeiro\n2. Belo Horizonte\n3. Curitiba     \n");
-  printf("\n=======================================================================\n");
-  printf("Escolha a carta que deseja jogar (0-3): ");
-  scanf("%d", &escolhaJogador1);
-  // Escolha aleatória da carta do computador
-  escolhaPc = rand() % 4;
-// Garante que o computador escolha uma carta diferente da do jogador 1
-  while(escolhaPc == escolhaJogador1){
+    int escolhaJogador, escolhaPc;
+
+    // 2. Seleção de Cartas
+    printf("====================================================\n");
+    printf("      BEM-VINDO AO SUPER TRUNFO - CIDADES           \n");
+    printf("              --- ESCOLHA SUA CARTA ---             \n");
+    printf("====================================================\n");
+    printf("0. %s | 1. %s\n2. %s | 3. %s\n", nomes[0], nomes[1], nomes[2], nomes[3]);
+    printf("Escolha sua carta (0-3): ");
+    scanf("%d", &escolhaJogador);
+
     escolhaPc = rand() % 4;
-  }
+    while(escolhaPc == escolhaJogador) {
+        escolhaPc = rand() % 4;
+    }
 
-  printf("\nJogador 1 escolheu a carta %d\n", escolhaJogador1);
-  printf("Computador escolheu a carta %d\n\n", escolhaPc);
-// Cálculo dos atributos derivados
-  float densidade_c1 = (float)populacoes[escolhaJogador1] / areas[escolhaJogador1];\
-  float pibPerCapita_c1 = (pibs[escolhaJogador1] * 1e9) / populacoes[escolhaJogador1];
-  float inversoDens1 = 1.0 / densidade_c1;
-  
-  float densidade_c2 = (float)populacoes[escolhaPc] / areas[escolhaPc];
-  float pibPerCapita_c2 = (pibs[escolhaPc] * 1e9) / populacoes[escolhaPc];
-  float inversoDens2 = 1.0 / densidade_c2; 
-// Exibição das cartas escolhidas
-  printf("Carta Jogador 1: %s\n\n", nomes[escolhaJogador1]);
-  printf("População: %lu\n", populacoes[escolhaJogador1]);
-  printf("Área: %.2f km²\n", areas[escolhaJogador1]);
-  printf("PIB: %.2f bilhões\n", pibs[escolhaJogador1]);
-  printf("Pontos Turísticos: %d\n", pontosTuristicos[escolhaJogador1]);
-  printf("Densidade demográfica: %.2f hab/km²\n\n", densidade_c1);
+    // Cálculo dos atributos derivados
+     float densidade_c1 = (float)populacoes[escolhaJogador] / areas[escolhaJogador];
+    float pibPerCapita_c1 = (pibs[escolhaJogador] * 1e9) / populacoes[escolhaJogador];
+    float inversoDens1 = 1.0 / densidade_c1;
+    float densidade_c2 = (float)populacoes[escolhaPc] / areas[escolhaPc];
+    float pibPerCapita_c2 = (pibs[escolhaPc] * 1e9) / populacoes[escolhaPc];
+    float inversoDens2 = 1.0 / densidade_c2;
 
-  printf("Carta Computador: %s\n\n", nomes[escolhaPc]);
-  printf("População: %lu\n", populacoes[escolhaPc]);  
-  printf("Área: %.2f km²\n", areas[escolhaPc]);
-  printf("PIB: %.2f bilhões\n", pibs[escolhaPc]);
-  printf("Pontos Turísticos: %d\n", pontosTuristicos[escolhaPc]);
-  printf("Densidade demográfica: %.2f hab/km²\n\n", densidade_c2);
-  
+    // Exibição das cartas escolhidas
+    printf("Carta Jogador 1: %s\n\n", nomes[escolhaJogador]);
+    printf("População: %lu\n", populacoes[escolhaJogador]);
+    printf("Área: %.2f km²\n", areas[escolhaJogador]);
+    printf("PIB: %.2f bilhões\n", pibs[escolhaJogador]);
+    printf("Pontos Turísticos: %d\n", pontosTuristicos[escolhaJogador]);
+    printf("Densidade demográfica: %.2f hab/km²\n\n", densidade_c1);
 
- int opcao;
-  printf("\n==================================\n");
-  printf("       Comparação de cartas  \n");
-  printf("Escolha o atributo para comparacao:\n");
-  printf("==================================\n");
-  
-  printf("1. População\n2. Área\n3. PIB\n4. Número de pontos turísticos \n5. Densidade demográfica\n");
-  printf("==================================\n");
-  printf("Digite a opção desejada (1-5): ");
-  scanf("%d", &opcao);
-// Lógica de comparação baseada na escolha do jogador
-  switch(opcao) {
-    case 1:
-      printf("\n--- RESULTADO DA COMPARAÇÃO ---\n");
-        printf("Atributo: População\n");
-        printf("%s: %lu habitantes\n", nomes[escolhaJogador1], populacoes[escolhaJogador1]);
-        printf("%s: %lu habitantes\n", nomes[escolhaPc], populacoes[escolhaPc]);
-        printf("-------------------------------\n");
+    printf("Carta Computador: %s\n\n", nomes[escolhaPc]);
+    printf("População: %lu\n", populacoes[escolhaPc]);  
+    printf("Área: %.2f km²\n", areas[escolhaPc]);
+    printf("PIB: %.2f bilhões\n", pibs[escolhaPc]);
+    printf("Pontos Turísticos: %d\n", pontosTuristicos[escolhaPc]);
+    printf("Densidade demográfica: %.2f hab/km²\n\n", densidade_c2);
 
-        if (populacoes[escolhaJogador1] > populacoes[escolhaPc]) {
-            printf("Vencedor: %s!\n", nomes[escolhaJogador1]);
-        } else if (populacoes[escolhaJogador1] < populacoes[escolhaPc]) {
-            printf("Vencedor: %s!\n", nomes[escolhaPc]);
-        } else {
-            printf("Resultado: Empate!\n");
+
+    // 3. Escolha dos Dois Atributos Diferentes
+    int escolha1, escolha2;
+
+    printf("\n==================================\n");
+    printf("       Comparação de cartas  \n");
+    printf("Escolha o atributo para comparacao:\n");
+    printf("==================================\n");
+    
+    printf("1. População\n2. Área\n3. PIB\n4. Número de pontos turísticos \n5. Densidade demográfica\n");
+    printf("==================================\n");
+    printf("Digite a opção desejada (1-5): ");
+    scanf("%d", &escolha1);
+
+    do {
+        printf("Escolha o segundo atributo (diferente do primeiro): ");
+        scanf("%d", &escolha2);
+
+        if (escolha1 == escolha2) {
+            printf("[ERRO] Voce ja escolheu este atributo!\n");
+        } else if (escolha2 < 1 || escolha2 > 5) {
+            printf("[ERRO] Opcao invalida! Escolha de 1 a 5.\n");
         }
-        break;
-    case 2:
-      printf("\n--- RESULTADO DA COMPARAÇÃO ---\n");
-      printf("Atributo area\n");
-      printf("%s: %.2f km²\n", nomes[escolhaJogador1], areas[escolhaJogador1]);
-      printf("%s: %.2f km²\n", nomes[escolhaPc], areas[escolhaPc]);
-      printf("-------------------------------\n");  
+    } while (escolha1 == escolha2 || (escolha2 < 1 || escolha2 > 5));
 
-      if (areas[escolhaJogador1] > areas[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaJogador1]);
-      } else if (areas[escolhaJogador1] < areas[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaPc]);
-      } else {
-        printf("Empate!\n");
-      }
-      break;
-      
-    case 3:
-      printf("\n--- RESULTADO DA COMPARAÇÃO ---\n");
-      printf("Atributo pib\n"); 
-      printf("%s: %.2f bilhões\n", nomes[escolhaJogador1], pibs[escolhaJogador1]);
-      printf("%s: %.2f bilhões\n", nomes[escolhaPc], pibs[escolhaPc]);
-      printf("-------------------------------\n");  
+    // 4. Lógica de Comparação
+    float v1_j, v1_pc, v2_j, v2_pc;
 
-      if (pibs[escolhaJogador1] > pibs[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaJogador1]);
-      } else if (pibs[escolhaJogador1] < pibs[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaPc]);
-      } else {
-        printf("Empate!\n");
-      }
-      break;
+    // Atribuindo valores para o Atributo 1
+    switch(escolha1) {
+        case 1: v1_j = (float)populacoes[escolhaJogador]; v1_pc = (float)populacoes[escolhaPc]; break;
+        case 2: v1_j = areas[escolhaJogador]; v1_pc = areas[escolhaPc]; break;
+        case 3: v1_j = pibs[escolhaJogador]; v1_pc = pibs[escolhaPc]; break;
+        case 4: v1_j = (float)pontosTuristicos[escolhaJogador]; v1_pc = (float)pontosTuristicos[escolhaPc]; break;
+        case 5: v1_j = densidade_c1; v1_pc = densidade_c2; break;   
+    }
 
-    case 4: 
-      printf("\n--- RESULTADO DA COMPARAÇÃO ---\n");
-      printf("Atributo pontos turisticos\n");
-      printf("%s: %d pontos turísticos\n", nomes[escolhaJogador1], pontosTuristicos[escolhaJogador1]);
-      printf("%s: %d pontos turísticos\n", nomes[escolhaPc], pontosTuristicos[escolhaPc]);
-      printf("-------------------------------\n");  
+    // Atribuindo valores para o Atributo 2
+    switch(escolha2) {
+        case 1: v2_j = (float)populacoes[escolhaJogador]; v2_pc = (float)populacoes[escolhaPc]; break;
+        case 2: v2_j = areas[escolhaJogador]; v2_pc = areas[escolhaPc]; break;
+        case 3: v2_j = pibs[escolhaJogador]; v2_pc = pibs[escolhaPc]; break;
+        case 4: v2_j = (float)pontosTuristicos[escolhaJogador]; v2_pc = (float)pontosTuristicos[escolhaPc]; break;
+        case 5: v2_j = densidade_c1; v2_pc = densidade_c2; break;
+    }
 
-      if (pontosTuristicos[escolhaJogador1] > pontosTuristicos[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaJogador1]);
-      } else if (pontosTuristicos[escolhaJogador1] < pontosTuristicos[escolhaPc]) {
-        printf("Vencedor: %s\n", nomes[escolhaPc]);
-      } else {
-        printf("Empate!\n");
-      }
-      break;
+    // 5. Exibição dos Resultados Individuais
+    printf("\n--- RESULTADOS DAS RODADAS ---\n");
+    
+    // Comparação Atributo 1
+    printf("Atributo 1: ");
+    if (escolha1 == 5) { // Regra Densidade
+        if (v1_j < v1_pc) printf("Jogador Venceu (%.2f vs %.2f)\n", v1_j, v1_pc);
+        else if (v1_j > v1_pc) printf("Computador Venceu (%.2f vs %.2f)\n", v1_pc, v1_j);
+        else printf("Empate!\n");
+    } else {
+        if (v1_j > v1_pc) printf("Jogador Venceu (%.2f vs %.2f)\n", v1_j, v1_pc);
+        else if (v1_j < v1_pc) printf("Computador Venceu (%.2f vs %.2f)\n", v1_pc, v1_j);
+        else printf("Empate!\n");
+    }
 
-    case 5:
-      printf("\n--- RESULTADO DA COMPARAÇÃO ---\n");
-      printf("Atributo densidade demografica\n"); 
-      printf("%s: %.2f hab/km²\n", nomes[escolhaJogador1], densidade_c1);
-      printf("%s: %.2f hab/km²\n", nomes[escolhaPc], densidade_c2);
-      printf("-------------------------------\n");
+    // Comparação Atributo 2
+    printf("Atributo 2: ");
+    if (escolha2 == 5) { // Regra Densidade
+        if (v2_j < v2_pc) printf("Jogador Venceu (%.2f vs %.2f)\n", v2_j, v2_pc);
+        else if (v2_j > v2_pc) printf("Computador Venceu (%.2f vs %.2f)\n", v2_pc, v2_j);
+        else printf("Empate!\n");
+    } else {
+        if (v2_j > v2_pc) printf("Jogador Venceu (%.2f vs %.2f)\n", v2_j, v2_pc);
+        else if (v2_j < v2_pc) printf("Computador Venceu (%.2f vs %.2f)\n", v2_pc, v2_j);
+        else printf("Empate!\n");
+    }
 
-      if (densidade_c1 < densidade_c2) {
-        printf("Vencedor: %s\n", nomes[escolhaJogador1]);
-      } else if (densidade_c1 > densidade_c2) {
-        printf("Vencedor: %s\n", nomes[escolhaPc]);
-      } else {
-        printf("Empate!\n");
-      }
-      break;
+    // 6. Soma e Resultado Final
+    float somaJ = v1_j + v2_j;
+    float somaPc = v1_pc + v2_pc;
 
-    default:
-        printf("\n[ERRO] A opção %d é inválida. Escolha um número de 1 a 5.\n", opcao);
-        break;
-  }
+    printf("\n--- VENCEDOR FINAL ---\n");
+    printf("Soma Jogador (%s): %.2f\n", nomes[escolhaJogador], somaJ);
+    printf("Soma Computador (%s): %.2f\n", nomes[escolhaPc], somaPc);
 
-return 0;
+    if (somaJ > somaPc) {
+        printf("RESULTADO: VOCE VENCEU!\n");
+    } else if (somaJ < somaPc) {
+        printf("RESULTADO: O COMPUTADOR VENCEU!\n");
+    } else {
+        printf("RESULTADO: EMPATE!\n");
+    }
+
+    return 0;
 }
